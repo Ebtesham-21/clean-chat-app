@@ -13,7 +13,7 @@ userRoute.get("/users", auth, async (req: any, res) => {
                     not: req?.user?.id,
                 },
             },
-        }),
+        });
         res.status(200).json(users);
     } catch (error: any) {
         res.status(500).json({ message: error?.message});
@@ -23,14 +23,14 @@ userRoute.get("/users", auth, async (req: any, res) => {
 userRoute.get("/user", auth, async (req: any, res) => {
     try {
         const user = await req.user;
-        console.log(user);
+       
         const users = await prisma.user.findUnique({
             where: {
                 id: req?.user?.id,
                     
                 
             },
-        }),
+        });
         res.status(200).json(users);
     } catch (error: any) {
         res.status(500).json({ message: error?.message});

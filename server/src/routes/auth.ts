@@ -6,6 +6,7 @@ import bcrypt from "bcryptjs";
 import {auth} from "../middleware/user";
 export const authRoute = Router();
 const SECRET = process.env.JWT_SECRET as string;
+const Imagepath = process.env.IMAGE_PATH;
 
 authRoute.post("/register", async (req, res:any) => {
     try {
@@ -18,25 +19,29 @@ authRoute.post("/register", async (req, res:any) => {
         if (existingUser) {
             return res.status(400).json({message: "User already exists"});
         }
+
         let file;
+        console.log(req.files);
+
+
         if(req.files){
             file = req.files?.profileImage as UploadedFile;
         let storagePath = getStoragePath(file);
+         await file.mv(storagePath);
        
-        console.log(storagePath,
-            "storage path"
-        );
-        await file.mv(storagePath);
+        
+        };
+       
 
 
-        }
+        
         const hashedPassword = await bcrypt.hash(password, 10);
         const user = await prisma.user.create({
             data: {
                 name,
                 email,
                 password: hashedPassword,
-                profileImage: file ? file.name : null,
+                profileImage: file ?Imagepath + file.name : null,
             },
         });
         return res.status(200).json({user})
