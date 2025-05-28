@@ -1,6 +1,6 @@
 import prisma from "../config/dbclient";    
 import {Router} from "express";
-import {auth} from "../middleware/user";
+import auth from "../middleware/user";
 export const messageRoute = Router();
 
 messageRoute.post("/create",auth, async(req:any, res:any) => {
