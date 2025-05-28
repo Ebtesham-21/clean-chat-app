@@ -22,7 +22,8 @@ app.use(express.urlencoded({extended: false}));
 app.use("/api/auth", authRoute);
 app.use("/api/users", usersRoute);
 app.use("/api/message", messageRoute);
-app.use("/api/files", express.static(path.join(__dirname, "storage")));
+app.use("/storage", express.static(path.join(__dirname, "storage")));
+
 app.get("/", (req:Request, res:any) => {
     return res.send("Welcome to the server");
 });

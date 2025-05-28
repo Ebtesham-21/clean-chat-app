@@ -8,7 +8,8 @@ import path from "path"; // ✅ Needed for getStoragePath
 
 export const authRoute = Router();
 const SECRET = process.env.JWT_SECRET as string;
-const Imagepath = process.env.IMAGE_PATH;
+const Imagepath = process.env.IMAGE_PATH || "/storage/";
+
 
 // ✅ Define getStoragePath
 const getStoragePath = (file: UploadedFile) => {
