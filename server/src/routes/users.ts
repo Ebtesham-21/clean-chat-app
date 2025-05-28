@@ -2,10 +2,11 @@ import prisma from "../config/dbclient";
 import {Router} from "express";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
+import auth from "../middleware/user";
 
-export const userRoute = Router();
+export const usersRoute = Router();
 
-userRoute.get("/users", auth, async (req: any, res) => {
+usersRoute.get("/users", auth, async (req: any, res) => {
     try {
         const users = await prisma.user.findMany({
             where: {
@@ -20,7 +21,7 @@ userRoute.get("/users", auth, async (req: any, res) => {
 
     }
 })
-userRoute.get("/user", auth, async (req: any, res) => {
+usersRoute.get("/user", auth, async (req: any, res) => {
     try {
         const user = await req.user;
        

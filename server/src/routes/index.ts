@@ -1,3 +1,3 @@
-export * from "./users";
-export * from "./auth ";
-export * from "./message";
+export { userRoute } from "./users";
+export { authRoute } from "./auth";
+export { messageRoute } from "./message";

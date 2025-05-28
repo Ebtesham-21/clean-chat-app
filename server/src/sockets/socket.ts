@@ -1,7 +1,7 @@
 import { disconnect } from "process";
 
 let users = [] as any[];
-const addUsers = (userId, socketId) => {
+const addUsers = (userId:string, socketId:string) => {
     if(userId){
         const user = users.find((user) => user?.userId===userId);
         if(user){
@@ -18,8 +18,13 @@ const removeUser = (socketId:any) => {
 }
 
 
-const userLogout = (userId) => {
+const userLogout = (userId:string) => {
     users = users?.filter((u) =>u.userId !== userId )
+}
+
+
+const findFriend = (userId:string) => {
+    return users?.find((user) => user?.userId===userId);
 }
 
 
@@ -31,8 +36,15 @@ export const appMessages = (socket:any, socketIo:any) => {
     socketIo.emit("getUsers", users);
     socketIo.emit("activeUsers", users);
 
+    socket.on("sendMessage", (message:any) => {
+        const user = findFriend(message.receiverId);
+        if(user){
+            socketIo.to(user.socketId).emit("newMessage", message);
+        }
+    })
 
-    socket.on("logout", (userId) => {
+
+    socket.on("logout", (userId:string) => {
         userLogout(userId)
     })
 
@@ -46,7 +58,7 @@ export const appMessages = (socket:any, socketIo:any) => {
                 socket.broadcast.emit("activeUsers", users);
             }
         },
-          5000);
+          3000);
     });
 
 
