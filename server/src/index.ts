@@ -20,7 +20,7 @@ app.use(express.json({limit: '1gb'}));
 app.use(fileUpload())
 app.use(express.urlencoded({extended: false}));
 app.use("/api/auth", authRoute);
-app.use("/api/users", usersRoute);
+app.use("/api", usersRoute);
 app.use("/api/message", messageRoute);
 app.use("/storage", express.static(path.join(__dirname, "storage")));
 
