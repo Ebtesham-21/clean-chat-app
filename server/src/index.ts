@@ -4,7 +4,9 @@ import path from 'path';
 import fileUpload from 'express-fileupload';
 import prisma from './config/dbclient';
 import {Server} from 'socket.io';
-import { usersRoute, authRoute, messageRoute  } from './routes'; // Adjust path as needed
+import { usersRoute } from './routes/users';  
+import { authRoute } from './routes/auth';
+import { messageRoute } from './routes/message';   
 import { appMessages } from './sockets/socket';
 
 
@@ -20,8 +22,8 @@ app.use(express.json({limit: '1gb'}));
 app.use(fileUpload())
 app.use(express.urlencoded({extended: false}));
 app.use("/api/auth", authRoute);
-app.use("/api", usersRoute);
-app.use("/api/message", messageRoute);
+app.use("/api/users", usersRoute);
+app.use("/api/messages", messageRoute);
 app.use("/storage", express.static(path.join(__dirname, "storage")));
 
 app.get("/", (req:Request, res:any) => {

@@ -6,7 +6,7 @@ import auth from "../middleware/user";
 
 export const usersRoute = Router();
 
-usersRoute.get("/users", auth, async (req: any, res) => {
+usersRoute.get("/", auth, async (req: any, res) => {
     try {
         console.log("Decoded user from token:", req.user);
         const users = await prisma.user.findMany({
@@ -22,7 +22,7 @@ usersRoute.get("/users", auth, async (req: any, res) => {
 
     }
 })
-usersRoute.get("/user", auth, async (req: any, res) => {
+usersRoute.get("/user", auth, async (req: any, res:any) => {
   try {
     const user = await prisma.user.findUnique({
       where: {
